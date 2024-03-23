@@ -15,11 +15,15 @@ export class ProductsComponent { // criado componente recebendo um array vazio
   constructor(private formBuilder: FormBuilder) { // construtor usando formBuilder
     this.formGroupProduct = formBuilder.group({
 
-      id       : ['0007'], // criando um formGroup inicialmente vazio ['']
-      name     : ['Wendel'],
-      price    : ['12.99'],
-      quantity : ['41']
+      id       : [''], // criando um formGroup inicialmente vazio ['']
+      name     : [''],
+      price    : [''],
+      quantity : ['']
     });
+  }
+
+  save() {
+    this.products.push(this.formGroupProduct.value); // salva os dados o array. (exibir na lista)
   }
 
 }
