@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsComponent } from './products/products.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule // IMPORTANTE! para fazer formularios reativos
+    ReactiveFormsModule, // IMPORTANTE! para fazer formularios reativos
+    HttpClientModule // porque nosso service está fazendo uma chamada http = (http://localhost:3000/products)
   ],
   providers: [],
   bootstrap: [AppComponent]
