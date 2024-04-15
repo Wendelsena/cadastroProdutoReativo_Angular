@@ -13,8 +13,8 @@
               class="form-control"
               placeholder="ex. 1234-06"
               id="ID"
-              (blur)="validateField(id)" />
-      <small *ngIf="id.hasError('required') && id.touched" class="text-danger">
+              (blur)="validateField(id)" /> <!-- para ser reativo ao foco -->
+      <small *ngIf="id.hasError('required') && id.touched" class="text-danger"> <!-- faz a logica da validação (*ngIf) -->
         * Please enter product ID
       </small>
     </div>
@@ -54,7 +54,7 @@
         * Please enter the producer quantity
       </small>
     </div>
-    <div class="row justify-content-center m-3"> <!-- Centralizar os botões -->
+    <div class="row justify-content-center m-3">
       <div class="col-md-4 col-8 mb-4">
         <button class="btn btn-primary m-2 col-12" type="button" (click)="save()">Save</button>
       </div>
@@ -68,13 +68,13 @@
           <th scope="col">Name</th>
           <th scope="col">Price</th>
           <th scope="col">Quantity</th>
-          <th scope="col" class="text-end">Actions</th> <!-- Corrigido o cabeçalho -->
+          <th scope="col" class="text-end">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products">
+        <tr *ngFor="let product of products"> <!-- *ngFor é usado para iterar sobre uma coleção de itens e renderizá-los.-->
           <th scope="row">{{product.id}}</th>
-          <td>{{product.name}}</td>
+          <td>{{product.name}}</td> <!-- {{}}: interpolação de dados. Usadas para renderizar o valor de uma expressão no template HTML -->
           <td>{{product.price}}</td>
           <td>{{product.quantity}}</td>
           <td class="d-flex justify-content-end">
