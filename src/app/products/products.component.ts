@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product'; // import da interface Product de product.ts
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ProductsService } from '../products.service';
 
 @Component({
@@ -18,14 +18,14 @@ export class ProductsComponent implements OnInit{ // criado componente recebendo
   constructor(private formBuilder: FormBuilder, // construtor usando formBuilder e service(json)
               private service    : ProductsService) {
 
-      this.formGroupProduct = formBuilder.group({
-
-      id       : [''], // criando um formGroup inicialmente vazio ['']
-      name     : [''],
-      price    : [''],
-      quantity : ['']
+  this.formGroupProduct = formBuilder.group({
+      id       : ['', [Validators.required]],
+      name     : ['', [Validators.required, Validators.minLength(3)]], // Corrigido aqui
+      price    : ['', [Validators.required, Validators.minLength(1)]],
+      quantity : ['', [Validators.required, Validators.minLength(1)]]
     });
   }
+
   ngOnInit(): void { // carregar um produto se torna ua constante.
     this.loadProducts();
   }
@@ -38,18 +38,20 @@ export class ProductsComponent implements OnInit{ // criado componente recebendo
   }
 
   save() {
-    if(this.isEditing) {
-      this.service.update(this.formGroupProduct.value).subscribe({
-        next : () => {
-          this.loadProducts();
-          this.isEditing = false;
-        }
-      })
-    }
-    else {
-      this.service.save(this.formGroupProduct.value).subscribe({ // salva os dados no json. (exibir na lista)
-        next: data => this.products.push(data)
-      });
+    if(this.formGroupProduct.valid){
+      if(this.isEditing) {
+        this.service.update(this.formGroupProduct.value).subscribe({
+          next : () => {
+            this.loadProducts();
+            this.isEditing = false;
+          }
+        })
+      }
+      else {
+        this.service.save(this.formGroupProduct.value).subscribe({ // salva os dados no json. (exibir na lista)
+          next: data => this.products.push(data)
+        });
+      }
     }
     this.formGroupProduct.reset();
   }
@@ -66,4 +68,22 @@ export class ProductsComponent implements OnInit{ // criado componente recebendo
     this.formGroupProduct.setValue(product);
     this.isEditing = true;
   }
+
+  get id(): any {
+    return this.formGroupProduct.get('id')
+  }
+  get name(): any {
+    return this.formGroupProduct.get("name")
+  }
+  get price(): any {
+    return this.formGroupProduct.get("price")
+  }
+  get quantity(): any {
+    return this.formGroupProduct.get("quantity")
+  }
+
+  validateField(control: AbstractControl): boolean {
+    return control.invalid && (control.dirty || control.touched);
+  }
+
 }

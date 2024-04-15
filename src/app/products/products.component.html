@@ -12,31 +12,47 @@
               type="text"
               class="form-control"
               placeholder="ex. 1234-06"
-              id="ID" />
-      <div id="emailHelp" class="form-text text-white">
-        Please enter the product <strong>ID</strong>.
-      </div>
+              id="ID"
+              (blur)="validateField(id)" />
+      <small *ngIf="id.hasError('required') && id.touched" class="text-danger">
+        * Please enter product ID
+      </small>
     </div>
     <div class="col-md-5 col-11 p-2">
       <label for="name" class="form-label">Product name</label>
       <input formControlName="name"
               type="text"
               class="form-control"
-              id="name" />
+              id="name"
+              (blur)="validateField(name)" />
+      <small *ngIf="name.hasError('required') && name.touched" class="text-danger">
+        * Please enter product name
+      </small>
+      <small *ngIf="name.hasError('minlength') && name.touched" class="text-danger">
+        * 3 character minimum
+      </small>
     </div>
     <div class="col-md-5 col-11 p-2">
       <label for="price" class="form-label">Price</label>
       <input formControlName="price"
               type="number"
               class="form-control"
-              id="price" />
+              id="price"
+              (blur)="validateField(price)" />
+      <small *ngIf="price.hasError('required') && price.touched" class="text-danger">
+        * Please enter product price
+      </small>
     </div>
     <div class="col-md-5 col-11 p-2">
       <label for="quantity" class="form-label">Quantity</label>
       <input formControlName="quantity"
               type="number"
               class="form-control"
-              id="quantity" />
+              id="quantity"
+              (blur)="validateField(quantity)" />
+      <small *ngIf="quantity.hasError('required') && quantity.touched" class="text-danger">
+        * Please enter the producer quantity
+      </small>
     </div>
     <div class="row justify-content-center m-3"> <!-- Centralizar os botões -->
       <div class="col-md-4 col-8 mb-4">
@@ -70,3 +86,4 @@
     </table>
   </div>
 </div>
+
