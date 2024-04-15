@@ -1,3 +1,3 @@
 - ## CadastroProdutoReativoAngular
 
-<img src="https://github.com/Wendelsena/cadastroProdutoReativo_Angular/blob/main/ExemploCadastroReativo.jpeg?raw=true" alt="ExemploCadastro">
+<img src="https://github.com/Wendelsena/cadastroProdutoReativo_Angular/blob/main/exemplo2.jpeg?raw=true" alt="ExemploCadastro">
