@@ -13,9 +13,11 @@ export class ProductsComponent implements OnInit{ // criado componente recebendo
 
   formGroupProduct: FormGroup; // iniciando o FormGroup
 
+  isEditing: boolean = false; // diz se a edição está ou não ativa. (existem outras maneiras)
+
   constructor(private formBuilder: FormBuilder, // construtor usando formBuilder e service(json)
-              private service    : ProductsService) { 
-   
+              private service    : ProductsService) {
+
       this.formGroupProduct = formBuilder.group({
 
       id       : [''], // criando um formGroup inicialmente vazio ['']
@@ -36,9 +38,32 @@ export class ProductsComponent implements OnInit{ // criado componente recebendo
   }
 
   save() {
-    this.service.save(this.formGroupProduct.value).subscribe({ // salva os dados no json. (exibir na lista)
-      next: data => this.products.push(data)
-    })
+    if(this.isEditing) {
+      this.service.update(this.formGroupProduct.value).subscribe({
+        next : () => {
+          this.loadProducts();
+          this.isEditing = false;
+        }
+      })
+    }
+    else {
+      this.service.save(this.formGroupProduct.value).subscribe({ // salva os dados no json. (exibir na lista)
+        next: data => this.products.push(data)
+      });
+    }
+    this.formGroupProduct.reset();
   }
 
+// next entrega o sucesso
+
+  remove(product : Product) {
+    this.service.remove(product).subscribe({
+      next: () => this.loadProducts() // < para deixar claro, está não é a forma mais eficiente de tratar remoções
+    });
+  }
+
+  edit(product : Product) { // pega o produto e altera os valores.
+    this.formGroupProduct.setValue(product);
+    this.isEditing = true;
+  }
 }
